@@ -52,6 +52,8 @@ const Camera = () => {
       } catch (error) {
         console.error('Error sending the image to the backend', error);
       }
+
+      const fun = (msg) => {return <h1>{msg}</h1>}
     }
   };
 
