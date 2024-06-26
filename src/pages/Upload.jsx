@@ -74,7 +74,7 @@ const UploadImage = () => {
 
     try {
       const token = Cookies.get("token");
-      const response = await fetch("http://192.168.191.97:8000/ocr/upload", {
+      const response = await fetch("http://192.168.130.97:8000/ocr/upload", {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,

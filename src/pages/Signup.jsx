@@ -23,7 +23,7 @@ function Signup() {
           password
         };
 
-        Axios.post('http://192.168.191.97:8000/users/', qs.stringify(data), {
+        Axios.post('http://192.168.130.97:8000/users/', qs.stringify(data), {
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
           }
@@ -88,7 +88,7 @@ function Signup() {
         />
 
         <button type="submit">Sign Up</button>
-        <p>Have an Account?<Link to="/Login">Login</Link></p>
+        <p>Have an Account?<Link to="/">Login</Link></p>
       </form>
     </div>
   );

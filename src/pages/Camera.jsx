@@ -1,15 +1,16 @@
 import React, { useRef, useCallback, useState } from 'react';
 import Webcam from 'react-webcam';
 import Cookies from 'js-cookie';
+import close from '../assets/close.png';
 
-const Camera = () => {
+const Camera = ({ onClose }) => {
   const webcamRef = useRef(null);
   const [imageSrc, setImageSrc] = useState(null);
 
   const get_Result = async (fileid) => {
     try {
       const token = Cookies.get('token');
-      const response = await fetch(`http://192.168.191.97:8000/ocr/result/${fileid}/`, {
+      const response = await fetch(`http://192.168.130.97:8000/ocr/result/${fileid}/`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -17,17 +18,13 @@ const Camera = () => {
         }
       });
 
-      // if (!response.ok) {
-      //   throw new Error('Network response was not ok ' + response.statusText);
-      // }
-
       const data = await response.json();
       console.log(data);
       return data;
     } catch (error) {
       console.error('Error retrieving the result from the backend', error);
     }
-  }
+  };
 
   const capture = useCallback(() => {
     const imageSrc = webcamRef.current.getScreenshot();
@@ -41,17 +38,13 @@ const Camera = () => {
 
       try {
         const token = Cookies.get('token');
-        const response = await fetch('http://192.168.191.97:8000/ocr/upload', {
+        const response = await fetch('http://192.168.130.97:8000/ocr/upload', {
           method: 'POST',
           headers: {
             'Authorization': `Bearer ${token}`
           },
           body: formData
         });
-
-        // if (!response.ok) {
-        //   throw new Error('Network response was not ok ' + response.statusText);
-        // }
 
         const data = await response.json();
         console.log(data);
@@ -80,17 +73,19 @@ const Camera = () => {
   };
 
   return (
-    <div>
+    <div className='webcam-container'>
+      <img src={close} alt="close" className='close' onClick={onClose} />
       <Webcam
         audio={false}
         ref={webcamRef}
         screenshotFormat="image/jpeg"
+        className="webcam-video"
       />
-      <button onClick={capture}>Capture Photo</button>
+      <button onClick={capture} className="capture-button">Capture Photo</button>
       {imageSrc && (
-        <div>
-          <img src={imageSrc} alt="Captured" />
-          <button onClick={handleSendImage}>Send to Backend</button>
+        <div className='captured-image-container'>
+          <img src={imageSrc} alt="Captured" className="captured-image" />
+          <button onClick={handleSendImage} className="send-button">Send to Backend</button>
         </div>
       )}
     </div>

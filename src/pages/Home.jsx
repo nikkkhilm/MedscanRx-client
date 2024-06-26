@@ -1,60 +1,65 @@
-import { useEffect } from "react"
-import axios from 'axios'
-import { Link, useNavigate } from "react-router-dom"
-import qs from 'qs'
-import webcam from 'react-webcam'
-import Camera from "./Camera"
-import Upload from './Upload'
+import { useEffect, useState } from "react";
+import axios from 'axios';
+import { Link, useNavigate } from "react-router-dom";
+import qs from 'qs';
+import webcam from 'react-webcam';
+import Camera from "./Camera";
+import Upload from './Upload';
+import Navbar from './Navbar';
+import uploadimg from '../assets/uploadimg.svg';
+import cameraimg from '../assets/camera.png';
+import typeimg from '../assets/type.png';
 
-function Home()
-{
-    // const navigate=useNavigate()
-    
-    // axios.defaults.withCredentials = true
-    // useEffect(()=>{
-    //     axios.post('http://192.168.242.97:8000/users/check', qs.stringify(data), {
-    //       headers: {
-    //         'Content-Type': 'application/x-www-form-urlencoded'
-    //       }
-    //     })
-    //     .then(res=>{
-    //         if(res.status===200)
-    //             {
-                    
-    //             }
-    //         else
-    //         {
-    //             navigate('/')
-    //         }    
-    //     })
-    // })
+function Home() {
+    const [showCamera, setShowCamera] = useState(false);
 
-    const handlelogout=()=>{
-    //     axios.post('')
-    //     .then(res=>{
-    //         if(res.status===200)
-    //             {
-    //                 navigate('/login')
-    //             }
-    //     }).catch(err=>{
-    //         console.log(err)
-    //     })
+    const [data,setData]=useState('')
+
+    const handleClick = () => {
+        document.getElementById('fileInput').click();
+    };
+
+    const handleCameraClick = () => {
+        setShowCamera(true);
+    };
+
+    const handleCloseCamera = () => {
+        setShowCamera(false);
+    };
+    const handleData=(e)=>{
+        setData(e.target.value)
     }
-    return(
+
+    return (
         <>
-        <h1>MED SCANNER</h1>
-            <button><Link to="/dashboard"> Dashboard</Link></button>
-            <br/>
-            
-            <br/>
-            <button onClick={handlelogout}> Logout</button>
-            <br/>
-            <br/>
-            <Upload/>
-            <br/>
-            <br/>
-            <Camera/>
+            <Navbar />
+            <br />
+            <br />
+            <div className="upload">
+                <img src={uploadimg} alt="Upload" />
+                <button onClick={handleClick} className="custom-file-upload">Upload a file</button>
+                <input type="file" id="fileInput" style={{ display: 'none' }} />
+            </div>
+            <br />
+            <br />
+            <div className="camera">
+                {!showCamera ? (
+                    <>
+                        <img src={cameraimg} alt="Camera" /> {/* Placeholder for the camera image */}
+                        <button onClick={handleCameraClick} className="custom-file-upload">Click Picture</button>
+                    </>
+                ) : (
+                    <Camera onClose={handleCloseCamera} />
+                )}
+            </div>
+            <div className="type">
+                <img src={typeimg} alt="Type" />
+                <h3>Enter Manually</h3>
+                <input type="text" onChange={handleData} placeholder="Enter the medicine name"/>
+                <button>Search</button>
+            </div>
         </>
-    )
+    );
 }
-export default Home
+
+export default Home;

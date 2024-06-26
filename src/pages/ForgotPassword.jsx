@@ -60,7 +60,7 @@ const ForgotPassword = () => {
         />
 
         <button type="submit">Sign Up</button>
-        <p>Have an Account?<Link to="/Login">Login</Link></p>
+        <p>Have an Account?<Link to="/">Login</Link></p>
       </form>
     </div>
   )

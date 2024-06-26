@@ -22,7 +22,7 @@ function Login() {
           password
         };
 
-        Axios.post('http://192.168.191.97:8000/login', qs.stringify(data), {
+        Axios.post('http://192.168.130.97:8000/login', qs.stringify(data), {
           headers: {
             'accept': 'application/json',
             'Content-Type': 'application/x-www-form-urlencoded'
@@ -32,7 +32,7 @@ function Login() {
           if (res.status === 200) {
             const token=res.data.access_token;
             cookies.set('token',token,{expires:1});
-            navigate('/');
+            navigate('/home');
           }
         }).catch(err => {
           // console.log(err);
