@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom"
 import qs from 'qs'
 import webcam from 'react-webcam'
 import Camera from "./Camera"
+import Upload from './Upload'
 
 function Home()
 {
@@ -47,6 +48,9 @@ function Home()
             
             <br/>
             <button onClick={handlelogout}> Logout</button>
+            <br/>
+            <br/>
+            <Upload/>
             <br/>
             <br/>
             <Camera/>
