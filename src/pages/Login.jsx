@@ -22,7 +22,7 @@ function Login() {
           password
         };
 
-        Axios.post('http://192.168.130.97:8000/login', qs.stringify(data), {
+        Axios.post(`${import.meta.env.VITE_API_URL}/auth/login/`, qs.stringify(data), {
           headers: {
             'accept': 'application/json',
             'Content-Type': 'application/x-www-form-urlencoded'
@@ -31,7 +31,7 @@ function Login() {
           console.log(res);
           if (res.status === 200) {
             const token=res.data.access_token;
-            cookies.set('token',token,{expires:1});
+            cookies.set('token',token,{expires:1/48});//30 minutes
             navigate('/home');
           }
         }).catch(err => {

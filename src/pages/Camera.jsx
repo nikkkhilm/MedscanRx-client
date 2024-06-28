@@ -1,7 +1,7 @@
 import React, { useRef, useCallback, useState } from 'react';
 import Webcam from 'react-webcam';
 import Cookies from 'js-cookie';
-import close from '../assets/close.png';
+import close from '../assets/close.svg';
 
 const Camera = ({ onClose }) => {
   const webcamRef = useRef(null);
@@ -10,7 +10,7 @@ const Camera = ({ onClose }) => {
   const get_Result = async (fileid) => {
     try {
       const token = Cookies.get('token');
-      const response = await fetch(`http://192.168.130.97:8000/ocr/result/${fileid}/`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/ocr/files/${fileid}/text`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -38,7 +38,7 @@ const Camera = ({ onClose }) => {
 
       try {
         const token = Cookies.get('token');
-        const response = await fetch('http://192.168.130.97:8000/ocr/upload', {
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/ocr/files`, {
           method: 'POST',
           headers: {
             'Authorization': `Bearer ${token}`

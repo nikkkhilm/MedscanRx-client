@@ -16,17 +16,17 @@ const ResetPassword = () => {
 
         const data = {
           email,
-          password
+          new_password:password
         };
 
-        Axios.post('http://192.168.191.97:8000/', qs.stringify(data), {
+        Axios.post(`${import.meta.env.VITE_API_URL}/users/reset-password`, qs.stringify(data), {
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
           },withCredentials:true
         }).then(res => {
           console.log(res);
           if (res.status === 200) {
-            navigate('/ResetPassword');
+            navigate('/');
           }
         }).catch(err => {
           // console.log(err);

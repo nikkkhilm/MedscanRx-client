@@ -23,14 +23,14 @@ function Signup() {
           password
         };
 
-        Axios.post('http://192.168.130.97:8000/users/', qs.stringify(data), {
+        Axios.post(`${import.meta.env.VITE_API_URL}/users`, qs.stringify(data), {
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
           }
         }).then(res => {
           console.log(res);
           if (res.status === 201) {
-            navigate('/Login');
+            navigate('/');
           }
         }).catch(err => {
           console.log(err);

@@ -17,7 +17,7 @@ const ForgotPassword = () => {
           email
         };
 
-        Axios.post('http://192.168.191.97:8000/users/check', qs.stringify(data), {
+        Axios.post(`${import.meta.env.VITE_API_URL}/users/check-existance`, qs.stringify(data), {
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
           },withCredentials:true
@@ -59,7 +59,7 @@ const ForgotPassword = () => {
           onChange={(e) => setEmail(e.target.value)}
         />
 
-        <button type="submit">Sign Up</button>
+        <button type="submit">Check</button>
         <p>Have an Account?<Link to="/">Login</Link></p>
       </form>
     </div>

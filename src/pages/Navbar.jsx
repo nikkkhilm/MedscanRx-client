@@ -1,34 +1,54 @@
-// type rfc or rfce for template
-import React from 'react';
-import {Link} from 'react-router-dom';
-// allows for client-side navigation between different components or pages within the application without causing a full page reload.
-// Using Link, you define the target path declaratively with the to prop, making your code more readable and maintainable.
+import React, { useState } from 'react';
+import cookies from 'js-cookie';
+import { Link, useNavigate } from 'react-router-dom';
 
+const Navbar = () => {
+  const navigate = useNavigate();
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
-export default function Navbar() {
-  const handlelogout=()=>{
-        axios.post('')
-        .then(res=>{
-            if(res.status===200)
-                {
-                    navigate('/login')
-                }
-        }).catch(err=>{
-            console.log(err)
-        })
-    }
+  const handleLogout = () => {
+    cookies.remove('token'); // Remove the token cookie
+    navigate('/'); // Navigate to the login page
+  };
+
+  const toggleSidebar = () => {
+    setSidebarOpen(!sidebarOpen);
+  };
 
   return (
-    <nav className='navbar'>
+    <nav className="navbar">
+      <h1>MED SCANNER</h1>
+      <div className="nav-links">
+        <Link to='/Home' className='nav-button'>HOME</Link>
+        <Link to='/About' className='nav-button'>About Us</Link>
+        <Link to='/dashboard' className='nav-button'>Dashboard</Link>
+        <button className='nav-button' onClick={handleLogout}>Logout</button>
+        <button className="nav-button sideimg" onClick={toggleSidebar}>
+          ☰
+        </button>
+      </div>
 
-        <h1>MED SCANNER</h1>
-        <div className="nav-links">
-        <button className='nav-button'><Link to='/Home'>HOME</Link></button>
-        <button className='nav-button' ><Link to='/About'>About Us</Link></button>
-        <button className='nav-button' ><Link to="/dashboard"> Dashboard</Link></button>
-        <button className='nav-button' onClick={handlelogout}> Logout</button>
+      {/* Sidebar */}
+      <div className={`sidebar ${sidebarOpen ? 'open' : ''}`}>
+        <button className="close-button" onClick={toggleSidebar}>
+          ✕
+        </button>
+        <br/>
+        <div className="sidebar-content">
+          <h2>Profile Info</h2>
+          {/* Add your profile information here */}
+          <ul>
+            <li>
+              <Link to="/services" onClick={toggleSidebar}>
+                Services
+              </Link>
+            </li>
+            {/* Add more sidebar links as needed */}
+          </ul>
         </div>
+      </div>
     </nav>
+  );
+};
 
-  )
-}
+export default Navbar;

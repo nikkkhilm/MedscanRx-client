@@ -1,13 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Cookies from "js-cookie";
 
-const UploadImage = () => {
-  const [file, setFile] = useState(null);
+const Upload = ({ file, onUploadComplete }) => {
   const [results, setResults] = useState({});
 
-  const handleFileChange = (event) => {
-    setFile(event.target.files[0]);
-  };
+  useEffect(() => {
+    if (file) {
+      handleUpload(file);
+    }
+  }, [file]);
 
   const fetchAdverseEffects = async (drugName) => {
     try {
@@ -40,7 +41,7 @@ const UploadImage = () => {
     try {
       const token = Cookies.get("token");
       const response = await fetch(
-        `http://192.168.130.97:8000/ocr/result/${fileid}/`,
+        `${import.meta.env.VITE_API_URL}/ocr/files/${fileid}/text`,
         {
           method: "POST",
           headers: {
@@ -55,15 +56,16 @@ const UploadImage = () => {
       }
 
       const data = await response.json();
-      console.log(data);
-      return data.drug_names; // Assuming the response contains an array of drug names
+      console.log('get_Result data:', data);
+      // Adjust this line to extract drug names properly
+      return data.extracted_text; // Assuming extracted_text contains the drug names
     } catch (error) {
       console.error("Error sending the image to the backend", error);
       return [];
     }
   };
 
-  const handleUpload = async () => {
+  const handleUpload = async (file) => {
     if (!file) {
       console.log("No file selected");
       return;
@@ -74,7 +76,7 @@ const UploadImage = () => {
 
     try {
       const token = Cookies.get("token");
-      const response = await fetch("http://192.168.130.97:8000/ocr/upload", {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/ocr/files`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -87,18 +89,24 @@ const UploadImage = () => {
       }
 
       const data = await response.json();
-      console.log(data);
+      console.log('handleUpload data:', data);
 
       const fileid = data.file_id; // Extract file_id from response
       if (fileid) {
         const drugNames = await get_Result(fileid); // Await the result
+        console.log('drugNames:', drugNames);
 
-        const newResults = {};
-        for (const drugName of drugNames) {
-          const adverseEffects = await fetchAdverseEffects(drugName);
-          newResults[drugName] = adverseEffects;
+        if (Array.isArray(drugNames)) {
+          const newResults = {};
+          for (const drugName of drugNames) {
+            const adverseEffects = await fetchAdverseEffects(drugName);
+            newResults[drugName] = adverseEffects;
+          }
+          setResults(newResults);
+          onUploadComplete(newResults); // Call the callback to notify the parent component
+        } else {
+          console.error("drugNames is not an array:", drugNames);
         }
-        setResults(newResults);
       }
     } catch (error) {
       console.error("Error sending the image to the backend", error);
@@ -107,9 +115,6 @@ const UploadImage = () => {
 
   return (
     <div>
-      <h1>Upload Image and Fetch Adverse Effects</h1>
-      <input type="file" onChange={handleFileChange} />
-      <button onClick={handleUpload}>Upload Image</button>
       {Object.keys(results).length > 0 && (
         <div>
           {Object.entries(results).map(([drugName, adverseEffects]) => (
@@ -132,4 +137,4 @@ const UploadImage = () => {
   );
 };
 
-export default UploadImage;
+export default Upload;
