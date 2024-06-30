@@ -50,6 +50,7 @@ const ResetPassword = () => {
     }    
 
   return (
+    <><h1 className="h">MEDSCAN</h1>
     <div className="sign-up-container">
       <form className="sign-up-form" onSubmit={handleSubmit}>
         <h1>Reset Password</h1>
@@ -73,6 +74,7 @@ const ResetPassword = () => {
         <p>Dont have an Account?<Link to="/Signup">Signup</Link></p>
       </form>
     </div>
+    </>
   )
 }
 

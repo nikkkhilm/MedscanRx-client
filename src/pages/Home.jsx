@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Cookies from "js-cookie";
 import Navbar from "./Navbar";
+import Results from "./Results";
 import Upload from "./Upload"; // Import the Upload component
 import uploadimg from "../assets/uploadimg.svg";
 import cameraimg from "../assets/camera.png";
@@ -92,31 +93,14 @@ const Home = () => {
           <Camera onClose={handleCloseCamera} />
         )}
       </div>
-      <div className="type">
+      {/* <div className="type">
         <img src={typeimg} alt="Type" />
         <h3>Enter Manually</h3>
         <input type="text" onChange={handleData} placeholder="Enter the medicine name" />
         <button onClick={handlemanualdata}>Search</button>
+      </div> */}
       </div>
-      </div>
-      {Object.keys(results).length > 0 && (
-        <div>
-          {Object.entries(results).map(([drugName, adverseEffects]) => (
-            <div key={drugName}>
-              <h2>{drugName}</h2>
-              {adverseEffects.length > 0 ? (
-                <ul>
-                  {adverseEffects.map((effect, index) => (
-                    <li key={index}>{effect}</li>
-                  ))}
-                </ul>
-              ) : (
-                <p>No adverse effects found.</p>
-              )}
-            </div>
-          ))}
-        </div>
-      )}
+      <Results results={results} />
     </>
   );
 };

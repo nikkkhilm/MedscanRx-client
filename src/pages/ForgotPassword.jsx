@@ -47,6 +47,8 @@ const ForgotPassword = () => {
     }
 
   return (
+    <>
+    <h1 className="h">MEDSCAN</h1>
     <div className="sign-up-container">
       <form className="sign-up-form" onSubmit={handleSubmit}>
         <h1>Forgot Password</h1>
@@ -63,6 +65,7 @@ const ForgotPassword = () => {
         <p>Have an Account?<Link to="/">Login</Link></p>
       </form>
     </div>
+    </>
   )
 }
 

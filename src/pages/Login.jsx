@@ -61,6 +61,8 @@ function Login() {
     }
 
   return (
+    <>
+      <h1 className="h">MEDSCAN</h1>
     <div className="sign-up-container">
       <form className="sign-up-form" onSubmit={handleSubmit}>
         <h1>Login</h1>
@@ -85,6 +87,7 @@ function Login() {
         <p>Dont have an Account?<Link to="/Signup">Signup</Link></p>
       </form>
     </div>
+    </>
   );
 }
 export default Login;

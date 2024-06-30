@@ -63,7 +63,7 @@ button:hover {
     right: -250px; /* Initially hide the sidebar on the right */
     width: 250px;
     height: 100%;
-    background-color: #333; /* Dark background color for sidebar */
+    background-color: #898F9C; /* Dark background color for sidebar */
     transition: right 0.3s ease;
     z-index: 1000; /* Ensure sidebar is above other content */
 }
@@ -109,7 +109,7 @@ button:hover {
 }
 
 .sidebar-content a:hover {
-    color: #1ba1e0;
+    color: #4267B2;
 }
 
 .sidebar .nav-button::after {
@@ -121,17 +121,19 @@ button:hover {
 
 /* Upload Section */
 .upload, .camera, .type {
-    flex: 1; /* Flex property to make them equal size */
-    display: flex;
-    flex-direction: column;
+    flex: 1; /*Flex property to make them equal size */
+    display: flex; 
+    flex-direction: column; 
     align-items: center;
     justify-content: center;
-    border: 2px solid #3498db;
+    border: 2px solid #4267B2;
     padding: 40px;
     margin: 20px;
     border-radius: 20px;
     background-color: white;
+    width: fit-content;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    
 }
 
 .upload img, .camera img, .type img {
@@ -141,7 +143,7 @@ button:hover {
 }
 
 .custom-file-upload {
-    background-color: #3498db;
+    background-color: #4267B2;
     color: white;
     padding: 10px 20px;
     border-radius: 20px;
@@ -150,11 +152,13 @@ button:hover {
 }
 
 .custom-file-upload:hover {
-    background-color: #2980b9;
+    background-color: #4267B2;
     border: 2px solid #1e6a8d;
 }
 
 .capture-button, .send-button, .type button {
+    margin-top: 10px;
+    margin-bottom: 10px;
     background-color: #3498db;
     color: white;
     border-radius: 20px;
@@ -164,9 +168,28 @@ button:hover {
     background-color: #2980b9;
 }
 
+.captured-image-container {
+    display: flex; /* Enable flexbox */
+    flex-direction: column;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    margin: auto;
+    width: 100%; /* Ensure container takes full width */
+}
+
+
+
+.captured-image, .webcam-video {
+    width: 100%; /* Set the same width */
+    max-width: 400px; /* Ensure they don't exceed a maximum width */
+    height: auto; /* Maintain aspect ratio */
+    border-radius: 10px;
+}
+
 /* Boxes Container */
 .boxes {
     display: flex;
+    margin: auto;
     justify-content: center;
     align-items: stretch;
     flex-wrap: wrap; /* Allows wrapping to next line if necessary */
@@ -177,7 +200,8 @@ button:hover {
     position: absolute;
     top: 10px;
     right: 10px;
-    width: 35px;
+    width: 5px;
+    height: 10px;
     cursor: pointer;
 }
 
@@ -236,114 +260,57 @@ button:hover {
     background-color: #0e70a4; /* Darker shade of blue on hover */
     transform: scale(1.05);
 }
-
-/* Keep other sections unchanged from the previous CSS provided */
-
-/* Navbar Styles */
-/* Navbar Styles */
-.navbar {
+.camera{
+    position: relative;
+}
+.webcam-container{
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+}
+
+/* result */
+/* Result.css */
+.results-container {
+    display: flex;
+    justify-content: center;
     align-items: center;
+    flex-direction: column;
+    width: 100%;
+    margin-top: 20px;
+  }
+  
+  .result-card {
+    background-color: #fff;
     padding: 20px;
-    background-color: #acd5f1;
-    color: white;
+    margin: 10px;
+    border-radius: 8px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    width: 80%;
+    max-width: 600px;
+    text-align: center;
   }
   
-  .navbar h1 {
-    font-size: 24px;
-    margin: 0;
-  }
-  
-  .nav-links {
-    display: flex;
-    gap: 15px;
-  }
-  
-  .nav-button {
-    background-color: #acd5f1;
-    color: white;
-    text-decoration: none;
-    padding: 10px 20px;
-    border-radius: 20px;
-    font-size: medium;
-    cursor: pointer;
-  }
-  
-  .nav-button:hover {
-    background-color: #1ba1e0;
-    transition: background-color 0.3s ease;
-    font-weight: bolder;
-  }
-  
-  /* Sidebar Styles */
-  .sidebar {
-    position: fixed;
-    top: 0;
-    right: -250px; /* Initially hide the sidebar on the right */
-    width: 250px;
-    height: 100%;
-    background-color: #333; /* Dark background color for sidebar */
-    transition: right 0.3s ease;
-    z-index: 1000; /* Ensure sidebar is above other content */
-  }
-  
-  .sidebar.open {
-    right: 0; /* Slide in the sidebar from the right when open */
-  }
-  
-  .close-button {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    font-size: 20px;
-    color: white;
-    background: none;
-    border: none;
-    cursor: pointer;
-  }
-  
-  .sidebar-content {
-    padding: 20px;
-    color: white;
-  }
-  
-  .sidebar-content h2 {
-    font-size: 20px;
+  .result-card h2 {
     margin-bottom: 10px;
   }
   
-  .sidebar-content ul {
+  .result-card ul {
     list-style-type: none;
     padding: 0;
   }
   
-  .sidebar-content ul li {
-    margin-bottom: 10px;
+  .result-card ul li {
+    background-color: #f9f9f9;
+    margin: 5px 0;
+    padding: 10px;
+    border-radius: 4px;
   }
   
-  .sidebar-content a {
+.h{
+    background-color: #4267B2;
     color: white;
-    text-decoration: none;
-    transition: color 0.3s ease;
-  }
-  
-  .sidebar-content a:hover {
-    color: #1ba1e0;
-  }
-  .sidebar .nav-button::after {
-    content: '☰'; /* Use '☰' character for hamburger icon */
-    font-size: 24px; /* Increase the font size of the hamburger icon */
-    vertical-align: middle; /* Align the icon vertically */
-    margin-right: 5px; /* Adjust spacing as needed */
-  }
-
-  .boxes{
-    display: flex;
-  }
-  
-  
-  
-
-
+    padding: 20px;
+}
+h1{
+    text-align: center;
+}

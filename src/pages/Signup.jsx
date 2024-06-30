@@ -53,7 +53,8 @@ function Signup() {
 
     }
 
-  return (
+  return (<>
+      <h1 className="h">MEDSCAN</h1>
     <div className="sign-up-container">
       <form className="sign-up-form" onSubmit={handleSubmit}>
         <h1>Signup</h1>
@@ -91,6 +92,7 @@ function Signup() {
         <p>Have an Account?<Link to="/">Login</Link></p>
       </form>
     </div>
+    </>
   );
 }
 export default Signup;

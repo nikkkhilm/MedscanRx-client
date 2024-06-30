@@ -1,11 +1,12 @@
-import React, { useRef, useCallback, useState } from 'react';
+import React, { useRef, useCallback, useState, useEffect } from 'react';
 import Webcam from 'react-webcam';
 import Cookies from 'js-cookie';
 import close from '../assets/close.svg';
 
-const Camera = ({ onClose }) => {
+const Camera = ({ onClose, setResults }) => {
   const webcamRef = useRef(null);
   const [imageSrc, setImageSrc] = useState(null);
+  const [hasCameraAccess, setHasCameraAccess] = useState(true);
 
   const get_Result = async (fileid) => {
     try {
@@ -54,6 +55,7 @@ const Camera = ({ onClose }) => {
         if (fileid) {
           const res = await get_Result(fileid); // Await the result
           console.log(res);
+          setResults(res); // Update the results state
         }
       } catch (error) {
         console.error('Error sending the image to the backend', error);
@@ -72,15 +74,33 @@ const Camera = ({ onClose }) => {
     return new Blob([ab], { type: mimeString });
   };
 
+  useEffect(() => {
+    const checkCameraPermissions = async () => {
+      try {
+        await navigator.mediaDevices.getUserMedia({ video: true });
+        setHasCameraAccess(true);
+      } catch (error) {
+        console.error('Error accessing the camera:', error);
+        setHasCameraAccess(false);
+      }
+    };
+
+    checkCameraPermissions();
+  }, []);
+
   return (
     <div className='webcam-container'>
       <img src={close} alt="close" className='close' onClick={onClose} />
-      <Webcam
-        audio={false}
-        ref={webcamRef}
-        screenshotFormat="image/jpeg"
-        className="webcam-video"
-      />
+      {hasCameraAccess ? (
+        <Webcam
+          audio={false}
+          ref={webcamRef}
+          screenshotFormat="image/jpeg"
+          className="webcam-video"
+        />
+      ) : (
+        <p>No access to camera. Please allow camera access.</p>
+      )}
       <button onClick={capture} className="capture-button">Capture Photo</button>
       {imageSrc && (
         <div className='captured-image-container'>
@@ -90,6 +110,6 @@ const Camera = ({ onClose }) => {
       )}
     </div>
   );
-}
+};
 
 export default Camera;
